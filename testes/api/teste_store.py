@@ -1,4 +1,4 @@
-# ToDo: 3 - criar uma venda de um pet para um usuário
+# done: 3 - criar uma venda de um pet para um usuário
 # ToDo: 4 - consultar os dados do pet que foi vendido
 import json
 

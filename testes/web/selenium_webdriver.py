@@ -66,5 +66,5 @@ class Testes:
         # Pagina de Compra
         # Executa/Valida
 
-        # Pagina de Obrigado
+        # Pagina de Agradecimento
         # Executa/Valida

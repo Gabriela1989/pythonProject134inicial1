@@ -28,8 +28,6 @@ class Testes:
         self.driver = webdriver.Chrome(
             'C:\\Users\\dell\\PycharmProjects\\pythonProject134inicial1\\vendors\\drivers\\chromedriver102.exe'
         )
-        # espera até 15 segundos por qualquer elemento
-        # self.driver.implicitly_wait(15)
 
     # Fim
     def teardown_method(self):
@@ -58,13 +56,32 @@ class Testes:
         self.driver.find_element(By.CSS_SELECTOR, 'input.btn.btn-primary').click()
 
         # Pagina Lista de Passagens
-        # Executa/Valida
-        assert self.driver.find_element(By.TAG_NAME, 'h3').text == titulo_passagens_esperado
-        self.driver.find_element(By.CSS_SELECTOR, "tr:nth-child(1) .btn").click()
-        time.sleep(10)
+        # Executa / Valida
+        assert self.driver.find_element(By.TAG_NAME, 'h3').text == f'Flights from {origem} to {destino}:'
 
+        self.driver.find_element(By.CSS_SELECTOR, "tr:nth-child(1) .btn").click()
+        time.sleep(3)
         # Pagina de Compra
-        # Executa/Valida
+        # Executa / Valida
+        # Limpar o campo do nome para evitar problemas ao digitar
+        self.driver.find_element(By.ID, 'inputName').clear()
+        # Prenche o nome do comprador
+        self.driver.find_element(By.ID, 'inputName').send_keys(primeiro_nome)
+
+        # Seleciona a bandeira do cartão
+        lista = self.driver.find_element(By.ID, 'cardType')
+        lista.click()
+        lista.find_element(By.XPATH, f'//option[ .= "{bandeira}"]').click()
+
+        # Marca o checkbox para ser lembrado
+        self.driver.find_element(By.ID, 'rememberMe').click()
+        time.sleep(3)
+        # Aperta o botão Purchase Flight
+        self.driver.find_element(By.CSS_SELECTOR, 'input.btn.btn-primary').click()
 
         # Pagina de Obrigado
-        # Executa/Valida
+        # Valida
+        assert self.driver.find_element(By.TAG_NAME, 'h1').text == mensagem_agradecimento_esperada
+        assert self.driver.find_element(By.CSS_SELECTOR, 'tr:nth-child(3) > td:nth-child(2)').text == \
+               preco_passagem_esperado
+        time.sleep(3)
